@@ -1,29 +1,22 @@
-"use client"
-
-import { useParams, useRouter } from "next/navigation"
-import { founderStories } from "@/lib/data"
+import { getStoryById } from "@/lib/stories"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { ArrowLeft, Youtube, ExternalLink } from "lucide-react"
+import { Youtube, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { BackButton } from "@/components/back-button"
+import { notFound } from "next/navigation"
 
-export default function StoryPage() {
-  const params = useParams()
-  const router = useRouter()
-  const story = founderStories.find((s) => s.id === Number(params.id))
+interface StoryPageProps {
+  params: Promise<{ id: string }>
+}
+
+export default async function StoryPage({ params }: StoryPageProps) {
+  const { id } = await params
+  const story = getStoryById(Number(id))
 
   if (!story) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-4">Story not found</h1>
-          <Button asChild>
-            <Link href="/">Go back home</Link>
-          </Button>
-        </div>
-      </div>
-    )
+    notFound()
   }
 
   // Parse the markdown summary into structured sections
@@ -34,9 +27,7 @@ export default function StoryPage() {
       {/* Header */}
       <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <Button variant="ghost" size="sm" onClick={() => router.back()} className="gap-2">
-            <ArrowLeft className="w-4 h-4" /> Back
-          </Button>
+          <BackButton />
           <ThemeToggle />
         </div>
       </header>

@@ -9,7 +9,7 @@ export function Footer() {
             <div className="w-6 h-6 rounded-md bg-primary flex items-center justify-center">
               <Rocket className="w-4 h-4 text-primary-foreground" />
             </div>
-            <span className="font-semibold">Starter Story</span>
+            <span className="font-semibold">Saas Ideas</span>
           </div>
           <p className="text-sm text-muted-foreground text-center">
             Summaries compiled from{" "}
@@ -21,7 +21,7 @@ export function Footer() {
             >
               Starter Story YouTube
             </a>
-            {" "}• Built with Next.js & shadcn/ui
+            {" "}• Built For Founders
           </p>
         </div>
       </div>

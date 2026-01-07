@@ -9,7 +9,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "Starter Story Summaries | Founder Playbooks That Work",
+  title: "Saas Ideas | Discover Your Next Profitable Saas",
   description: "Real stories from founders who built profitable apps. Learn their exact strategies, tech stacks, and distribution playbooks.",
 };
 
