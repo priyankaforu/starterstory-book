@@ -1,4 +1,5 @@
-import { getStoryById } from "@/lib/stories"
+import { Metadata } from "next"
+import { getStoryById, getStories } from "@/lib/stories"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Youtube, ExternalLink } from "lucide-react"
@@ -9,6 +10,60 @@ import { notFound } from "next/navigation"
 
 interface StoryPageProps {
   params: Promise<{ id: string }>
+}
+
+// Generate static params for all stories
+export async function generateStaticParams() {
+  const stories = getStories()
+  return stories.map((story) => ({
+    id: story.id.toString(),
+  }))
+}
+
+// Dynamic metadata for each story
+export async function generateMetadata({ params }: StoryPageProps): Promise<Metadata> {
+  const { id } = await params
+  const story = getStoryById(Number(id))
+
+  if (!story) {
+    return {
+      title: "Story Not Found",
+    }
+  }
+
+  const title = `${story.founder} - ${story.app} (${story.revenue}) | Founder Story`
+  const description = `Learn how ${story.founder} built ${story.app} to ${story.revenue}. ${story.keyInsight}`
+
+  return {
+    title,
+    description,
+    keywords: [
+      story.app,
+      story.founder,
+      ...story.tags,
+      "founder story",
+      "startup case study",
+      "SaaS success",
+      "indie hacker",
+    ],
+    openGraph: {
+      title,
+      description,
+      url: `https://saasideas.com/story/${id}`,
+      type: "article",
+      publishedTime: story.postedDate,
+      authors: [story.founder],
+      tags: story.tags,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    alternates: {
+      canonical: `https://saasideas.com/story/${id}`,
+    },
+  }
 }
 
 export default async function StoryPage({ params }: StoryPageProps) {
@@ -22,75 +77,107 @@ export default async function StoryPage({ params }: StoryPageProps) {
   // Parse the markdown summary into structured sections
   const sections = parseSummary(story.summary)
 
+  // JSON-LD structured data for the article
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: `${story.founder} - ${story.app} (${story.revenue})`,
+    description: story.keyInsight,
+    author: {
+      "@type": "Person",
+      name: story.founder,
+    },
+    datePublished: story.postedDate,
+    publisher: {
+      "@type": "Organization",
+      name: "SaasIdeas",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://saasideas.com/doodleColored.png",
+      },
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `https://saasideas.com/story/${id}`,
+    },
+    keywords: story.tags.join(", "),
+  }
+
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
-          <BackButton />
-          <ThemeToggle />
-        </div>
-      </header>
-
-      {/* Content */}
-      <main className="container max-w-4xl mx-auto px-4 py-8">
-        {/* Title Section */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-3 py-1">
-              {story.revenue}
-            </Badge>
-            <span className="text-sm text-muted-foreground">{story.postedDate}</span>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <div className="min-h-screen bg-background">
+        {/* Header */}
+        <header className="sticky top-0 z-50 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          <div className="container max-w-4xl mx-auto px-4 h-16 flex items-center justify-between">
+            <BackButton />
+            <ThemeToggle />
           </div>
-          
-          <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
-            {story.title}
-          </h1>
-          
-          <p className="text-lg text-muted-foreground mb-4">
-            <span className="font-medium text-foreground">{story.founder}</span> • {story.app}
-          </p>
-          
-          <div className="flex flex-wrap gap-2 mb-6">
-            {story.tags.map((tag) => (
-              <Badge key={tag} variant="secondary">
-                {tag}
+        </header>
+
+        {/* Content */}
+        <main className="container max-w-4xl mx-auto px-4 py-8">
+          {/* Title Section */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3 mb-4">
+              <Badge className="bg-emerald-500 hover:bg-emerald-600 text-white font-semibold text-sm px-3 py-1">
+                {story.revenue}
               </Badge>
-            ))}
-          </div>
+              <span className="text-sm text-muted-foreground">{story.postedDate}</span>
+            </div>
+            
+            <h1 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">
+              {story.title}
+            </h1>
+            
+            <p className="text-lg text-muted-foreground mb-4">
+              <span className="font-medium text-foreground">{story.founder}</span> • {story.app}
+            </p>
+            
+            <div className="flex flex-wrap gap-2 mb-6">
+              {story.tags.map((tag) => (
+                <Badge key={tag} variant="secondary">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
 
-          <Button asChild size="lg" className="gap-2">
-            <a href={story.videoUrl} target="_blank" rel="noopener noreferrer">
-              <Youtube className="w-5 h-5" /> Watch Full Video <ExternalLink className="w-4 h-4" />
-            </a>
-          </Button>
-        </div>
-
-        {/* Divider */}
-        <hr className="my-8 border-border" />
-
-        {/* Summary Content */}
-        <article className="space-y-8">
-          {sections.map((section, idx) => (
-            <Section key={idx} section={section} />
-          ))}
-        </article>
-
-        {/* Bottom CTA */}
-        <div className="mt-12 pt-8 border-t">
-          <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-            <Button variant="outline" asChild>
-              <Link href="/">← Browse More Stories</Link>
-            </Button>
-            <Button asChild className="gap-2">
+            <Button asChild size="lg" className="gap-2">
               <a href={story.videoUrl} target="_blank" rel="noopener noreferrer">
-                <Youtube className="w-4 h-4" /> Watch on YouTube
+                <Youtube className="w-5 h-5" /> Watch Full Video <ExternalLink className="w-4 h-4" />
               </a>
             </Button>
           </div>
-        </div>
-      </main>
-    </div>
+
+          {/* Divider */}
+          <hr className="my-8 border-border" />
+
+          {/* Summary Content */}
+          <article className="space-y-8">
+            {sections.map((section, idx) => (
+              <Section key={idx} section={section} />
+            ))}
+          </article>
+
+          {/* Bottom CTA */}
+          <div className="mt-12 pt-8 border-t">
+            <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+              <Button variant="outline" asChild>
+                <Link href="/stories">← Browse More Stories</Link>
+              </Button>
+              <Button asChild className="gap-2">
+                <a href={story.videoUrl} target="_blank" rel="noopener noreferrer">
+                  <Youtube className="w-4 h-4" /> Watch on YouTube
+                </a>
+              </Button>
+            </div>
+          </div>
+        </main>
+      </div>
+    </>
   )
 }
 

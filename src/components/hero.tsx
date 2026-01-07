@@ -1,7 +1,4 @@
-"use client"
-
-import { Badge } from "@/components/ui/badge"
-import { Sparkles } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 interface HeroProps {
   storiesCount: number
@@ -9,32 +6,51 @@ interface HeroProps {
 
 export function Hero({ storiesCount }: HeroProps) {
   return (
-    <section className="py-10 md:py-14">
-      <div className="container mx-auto px-4 text-center">
-        <Badge variant="secondary" className="mb-3 gap-1">
-          <Sparkles className="w-3 h-3" />
-          {storiesCount} Founder Case Studies
-        </Badge>
-        <h1 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
-          Discover Your Next{" "}
-          <span className="bg-teal-500/20 px-2 py-1 rounded-md text-teal-600 dark:text-teal-400">Saas Idea</span>
-        </h1>
-        <p className="text-base text-muted-foreground max-w-xl mx-auto mb-6">
-          Real stories from founders who built profitable apps. Learn their exact strategies, 
-          tech stacks, and distribution playbooks.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4 text-xs text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
-            <span>$1.5M+ Total Revenue</span>
+    <section className="py-20 md:py-32">
+      <div className="container mx-auto px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 bg-teal-500/10 text-teal-600 dark:text-teal-400 px-4 py-2 rounded-full text-sm font-medium mb-8">
+            {storiesCount}+ Profitable Business Ideas & Founder Stories
           </div>
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-blue-500" />
-            <span>{storiesCount} Unique Strategies</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-1.5 h-1.5 rounded-full bg-purple-500" />
-            <span>Actionable Playbooks</span>
+          
+          {/* Main headline - SEO optimized with trending keywords */}
+          <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight mb-6 leading-tight font-display">
+            <span className="bg-teal-500 text-white px-3 py-1 rounded-lg inline-block mb-2">
+              SaaS Ideas
+            </span>
+            <br />
+            <span className="text-foreground">
+              That Build Empires
+            </span>
+          </h1>
+          
+          {/* Subheadline - keyword rich */}
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto mb-10">
+            Discover profitable micro SaaS ideas, side hustle opportunities, and startup strategies from real indie hackers. 
+            Curated founder interviews with actionable playbooks to help you build your next online business.
+          </p>
+          
+          {/* CTA Button */}
+          <a 
+            href="/stories" 
+            className="inline-flex items-center gap-2 bg-foreground text-background px-8 py-4 rounded-full font-semibold text-lg hover:opacity-90 transition-all"
+          >
+            Explore Founder Stories
+            <ArrowRight className="w-5 h-5" />
+          </a>
+          
+          {/* Stats - SEO keywords */}
+          <div className="flex flex-wrap justify-center gap-8 mt-16 text-sm">
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">$1.5M+ Combined Revenue</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Actionable Growth Playbooks</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="text-muted-foreground">Real Tech Stacks & Tools</span>
+            </div>
           </div>
         </div>
       </div>
