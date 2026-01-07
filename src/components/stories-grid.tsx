@@ -33,7 +33,7 @@ export function StoriesGrid({ stories }: StoriesGridProps) {
       params.set("page", page.toString())
     }
     const queryString = params.toString()
-    router.push(queryString ? `/?${queryString}` : "/", { scroll: false })
+    router.push(queryString ? `/stories?${queryString}` : "/stories", { scroll: false })
   }
 
   return (
