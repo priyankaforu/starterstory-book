@@ -3,7 +3,7 @@ import { getStories } from "@/lib/stories"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const stories = getStories()
-  const baseUrl = "https://saasideas.com"
+  const baseUrl = "https://saasideas.top"
 
   // Generate story URLs
   const storyUrls = stories.map((story) => ({
