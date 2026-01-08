@@ -49,7 +49,7 @@ export async function generateMetadata({ params }: StoryPageProps): Promise<Meta
     openGraph: {
       title,
       description,
-      url: `https://saasideas.com/story/${id}`,
+      url: `https://saasideas.top/story/${id}`,
       type: "article",
       publishedTime: story.postedDate,
       authors: [story.founder],
@@ -61,7 +61,7 @@ export async function generateMetadata({ params }: StoryPageProps): Promise<Meta
       description,
     },
     alternates: {
-      canonical: `https://saasideas.com/story/${id}`,
+      canonical: `https://saasideas.top/story/${id}`,
     },
   }
 }
@@ -93,12 +93,12 @@ export default async function StoryPage({ params }: StoryPageProps) {
       name: "SaasIdeas",
       logo: {
         "@type": "ImageObject",
-        url: "https://saasideas.com/doodleColored.png",
+        url: "https://saasideas.top/doodleColored.png",
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://saasideas.com/story/${id}`,
+      "@id": `https://saasideas.top/story/${id}`,
     },
     keywords: story.tags.join(", "),
   }

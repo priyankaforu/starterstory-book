@@ -23,11 +23,11 @@ export const metadata: Metadata = {
   openGraph: {
     title: "100+ Founder Success Stories | SaaS Ideas & Side Hustle Case Studies",
     description: "Browse curated founder case studies with actionable playbooks. Discover profitable SaaS ideas and real tech stacks from successful entrepreneurs.",
-    url: "https://saasideas.com/stories",
+    url: "https://saasideas.top/stories",
     type: "website",
   },
   alternates: {
-    canonical: "https://saasideas.com/stories",
+    canonical: "https://saasideas.top/stories",
   },
 }
 
@@ -37,7 +37,7 @@ const jsonLd = {
   "@type": "CollectionPage",
   name: "Founder Success Stories",
   description: "Curated summaries from Starter Story founder interviews with actionable business ideas and growth strategies.",
-  url: "https://saasideas.com/stories",
+  url: "https://saasideas.top/stories",
   mainEntity: {
     "@type": "ItemList",
     itemListElement: [],

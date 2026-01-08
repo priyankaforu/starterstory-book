@@ -14,7 +14,7 @@ const bricolageGrotesque = Bricolage_Grotesque({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://saasideas.com"),
+  metadataBase: new URL("https://saasideas.top"),
   title: {
     default: "SaasIdeas | Profitable Business Ideas & Founder Stories 2026",
     template: "%s | SaasIdeas",
@@ -60,7 +60,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "SaasIdeas | Profitable Business Ideas & Founder Stories 2026",
     description: "Discover profitable SaaS ideas, side hustle opportunities, and micro SaaS concepts from real founder interviews. Learn startup strategies and growth playbooks.",
-    url: "https://saasideas.com",
+    url: "https://saasideas.top",
     siteName: "SaasIdeas",
     images: [
       {
@@ -81,7 +81,7 @@ export const metadata: Metadata = {
     creator: "@priyankapudi",
   },
   alternates: {
-    canonical: "https://saasideas.com",
+    canonical: "https://saasideas.top",
   },
   category: "Business",
 };
@@ -92,7 +92,7 @@ const jsonLd = {
   "@type": "WebSite",
   name: "SaasIdeas",
   description: "Curated summaries from Starter Story founder interviews. Discover profitable business ideas, growth strategies, and tech stacks from successful entrepreneurs.",
-  url: "https://saasideas.com",
+  url: "https://saasideas.top",
   author: {
     "@type": "Person",
     name: "Priyanka",
@@ -103,12 +103,12 @@ const jsonLd = {
     name: "SaasIdeas",
     logo: {
       "@type": "ImageObject",
-      url: "https://saasideas.com/doodleColored.png",
+      url: "https://saasideas.top/doodleColored.png",
     },
   },
   potentialAction: {
     "@type": "SearchAction",
-    target: "https://saasideas.com/stories?q={search_term_string}",
+    target: "https://saasideas.top/stories?q={search_term_string}",
     "query-input": "required name=search_term_string",
   },
 };
